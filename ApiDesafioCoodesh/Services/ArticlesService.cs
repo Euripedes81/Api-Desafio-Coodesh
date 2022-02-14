@@ -50,9 +50,27 @@ namespace ApiDesafioCoodesh.Services
             }).ToList();
         }
 
-        public Task<ArticlesViewModel> Obter(int id)
+        public async Task<ArticlesViewModel> Obter(int id)
         {
-            throw new NotImplementedException();
+            var articles = await _articlesRepository.Obter(id);
+            if(articles == null)
+            {
+                return null;
+            }
+            return new ArticlesViewModel
+            {
+                Id = articles.Id,
+                Title = articles.Title,
+                Url = articles.Url,
+                ImageUrl = articles.ImageUrl,
+                NewsSite = articles.NewsSite,
+                Summary = articles.Summary,
+                PublishedAt = articles.PublishedAt,
+                UpdateAt = articles.UpdateAt,
+                Featured = articles.Featured,
+                Launches = articles.launches,
+                Events = articles.events
+            };
         }
 
         public Task Remover(int id)

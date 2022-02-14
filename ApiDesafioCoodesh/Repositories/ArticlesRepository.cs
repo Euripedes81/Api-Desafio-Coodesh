@@ -92,9 +92,58 @@ namespace ApiDesafioCoodesh.Repositories
             return articless;
         }
 
-        public Task<Articles> Obter(int id)
+        public async Task<Articles> Obter(int id)
         {
-            throw new NotImplementedException();
+            Articles articles = null;
+            var comando = $"select * from articles where id = '{id}'";
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            MySqlDataReader mySqlDataReader = (MySqlDataReader)await mySqlCommand.ExecuteReaderAsync();
+            if (mySqlDataReader.Read())
+            {
+                articles = new Articles
+                {
+                    Id = (int)mySqlDataReader["id"],
+                    Title = (string)mySqlDataReader["title"],
+                    Url = (string)mySqlDataReader["url"],
+                    ImageUrl = (string)mySqlDataReader["imageUrl"],
+                    NewsSite = (string)mySqlDataReader["newsSite"],
+                    Summary = (string)mySqlDataReader["url"],
+                    PublishedAt = (DateTime)mySqlDataReader["publishedAt"],
+                    UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
+                    Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
+                    launches = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },
+                    events = new Events { Id = Convert.ToString(mySqlDataReader["events_fk"]) }
+
+                };
+                await mySqlConnection.CloseAsync();
+                if (articles == null)
+                {
+                    return null;
+                }
+                if (!string.IsNullOrEmpty(articles.launches.Id))
+                {
+                    var launchesComando = $"select * from launches where id = '{articles.launches.Id}'";
+                    await mySqlConnection.OpenAsync();
+                    MySqlCommand launchesMySqlCommand = new MySqlCommand(launchesComando, mySqlConnection);
+                    MySqlDataReader launchesMySqlDataReader = (MySqlDataReader)await launchesMySqlCommand.ExecuteReaderAsync();
+                    launchesMySqlDataReader.Read();
+                    articles.launches.Provider = Convert.ToString(launchesMySqlDataReader["provider"]);
+                    await mySqlConnection.CloseAsync();
+                }
+                if (!string.IsNullOrEmpty(articles.events.Id))
+                {
+                    var eventsComando = $"select * from events where id = '{articles.events.Id}'";
+                    await mySqlConnection.OpenAsync();
+                    MySqlCommand eventsMySqlCommand = new MySqlCommand(eventsComando, mySqlConnection);
+                    MySqlDataReader eventsMySqlDataReader = (MySqlDataReader)await eventsMySqlCommand.ExecuteReaderAsync();
+                    eventsMySqlDataReader.Read();
+                    articles.events.Provider = Convert.ToString(eventsMySqlDataReader["provider"]);
+                    await mySqlConnection.CloseAsync();
+                }
+            }
+            return articles;
+
         }
 
         public Task Remover(int id)

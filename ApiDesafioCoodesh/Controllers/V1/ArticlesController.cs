@@ -1,4 +1,5 @@
 ﻿using ApiDesafioCoodesh.Services;
+using ApiDesafioCoodesh.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ApiDesafioCoodesh.Controllers.V1
 {
-    [Route("api/V1[controller]")]
+    [Route("api/V1/[controller]")]
     [ApiController]
     public class ArticlesController : ControllerBase
     {
@@ -25,6 +26,17 @@ namespace ApiDesafioCoodesh.Controllers.V1
             if (articless.Count() == 0)
                 return NoContent();
             return Ok(articless);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ArticlesViewModel>> GetId([FromRoute] int id)
+        {
+            var articlesViewModel = await _articlesService.Obter(id);
+            if(articlesViewModel == null)
+            {
+                return null;
+            }
+            return Ok(articlesViewModel);
         }
     }
 }
