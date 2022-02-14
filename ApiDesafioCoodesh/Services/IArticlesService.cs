@@ -1,4 +1,5 @@
-﻿using ApiDesafioCoodesh.ViewModel;
+﻿using ApiDesafioCoodesh.InputModel;
+using ApiDesafioCoodesh.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,8 +10,8 @@ namespace ApiDesafioCoodesh.Services
     {
         Task<List<ArticlesViewModel>> Obter(int pagina, int quantidade);
         Task<ArticlesViewModel> Obter(int id);
-        Task Inserir(ArticlesViewModel articlesViewModel);
-        Task Atualizar(ArticlesViewModel articlesViewModel);
+        Task<ArticlesViewModel> Inserir(ArticlesInputModel articlesInputModel);
+        Task Atualizar(ArticlesInputModel articlesInputModel);
         Task Remover(int id);
     }
 }

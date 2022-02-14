@@ -1,4 +1,5 @@
-﻿using ApiDesafioCoodesh.Services;
+﻿using ApiDesafioCoodesh.InputModel;
+using ApiDesafioCoodesh.Services;
 using ApiDesafioCoodesh.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,11 +33,19 @@ namespace ApiDesafioCoodesh.Controllers.V1
         public async Task<ActionResult<ArticlesViewModel>> GetId([FromRoute] int id)
         {
             var articlesViewModel = await _articlesService.Obter(id);
-            if(articlesViewModel == null)
+            if (articlesViewModel == null)
             {
                 return null;
             }
             return Ok(articlesViewModel);
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ArticlesViewModel>> Post([FromBody] ArticlesInputModel articlesInputModel)
+        {
+            var articles = await _articlesService.Inserir(articlesInputModel);
+            return base.Ok((object)articles);
+        }
     }
 }
+

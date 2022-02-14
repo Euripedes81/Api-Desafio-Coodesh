@@ -1,9 +1,9 @@
 ﻿using ApiDesafioCoodesh.Entities;
 using System;
 
-namespace ApiDesafioCoodesh.ViewModel
+namespace ApiDesafioCoodesh.InputModel
 {
-    public class ArticlesViewModel
+    public class ArticlesInputModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -12,7 +12,7 @@ namespace ApiDesafioCoodesh.ViewModel
         public string NewsSite { get; set; }
         public string Summary { get; set; }
         public DateTime PublishedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+       // public DateTime UpdateAt { get; set; }
         public bool Featured { get; set; }
         public Launches LaunchesProp { get; set; }
         public Events EventsProp { get; set; }

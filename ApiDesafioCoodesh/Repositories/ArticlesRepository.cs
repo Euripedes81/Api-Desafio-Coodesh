@@ -26,9 +26,15 @@ namespace ApiDesafioCoodesh.Repositories
         //    throw new NotImplementedException();
         //}
 
-        public Task Inserir(Articles articles)
+        public async Task Inserir(Articles articles)
         {
-            throw new NotImplementedException();
+            var comando = "insert into articles (id, title, url, imageUrl, newsSite, summary, publishedAt, featured, launches_fk, events_fk)" +
+                $" values ('{articles.Id}', '{articles.Title}', '{articles.Url}', '{articles.ImageUrl}', '{articles.NewsSite}', '{articles.Summary}', '{articles.PublishedAt}'," +
+                $" '{articles.Featured}', '{articles.LaunchesProp.Id}', '{articles.EventsProp.Id}')";
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            await mySqlConnection.CloseAsync();
         }
 
         public async Task<List<Articles>> Obter(int pagina, int quantidade)
@@ -48,11 +54,11 @@ namespace ApiDesafioCoodesh.Repositories
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["url"],
-                    PublishedAt = (DateTime)mySqlDataReader["publishedAt"],
-                    UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
+                    PublishedAt = Convert.ToDateTime( mySqlDataReader["publishedAt"]),
+                    UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
-                    launches = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },
-                    events = new Events { Id = Convert.ToString(mySqlDataReader["events_fk"]) }
+                    LaunchesProp = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },
+                    EventsProp = new Events { Id = Convert.ToString(mySqlDataReader["events_fk"]) }
 
                 });
             }
@@ -63,28 +69,28 @@ namespace ApiDesafioCoodesh.Repositories
             }
             foreach (var art in articless)
             {
-                if (!string.IsNullOrEmpty(art.launches.Id))
+                if (!string.IsNullOrEmpty(art.LaunchesProp.Id))
                 {
-                    var launchesComando = $"select * from launches where id = '{art.launches.Id}'";
+                    var launchesComando = $"select * from launches where id = '{art.LaunchesProp.Id}'";
                     await mySqlConnection.OpenAsync();
                     MySqlCommand launchesMySqlCommand = new MySqlCommand(launchesComando, mySqlConnection);
                     MySqlDataReader launchesMySqlDataReader = (MySqlDataReader)await launchesMySqlCommand.ExecuteReaderAsync();
                     launchesMySqlDataReader.Read();
-                    art.launches.Provider = Convert.ToString(launchesMySqlDataReader["provider"]);
+                    art.LaunchesProp.Provider = Convert.ToString(launchesMySqlDataReader["provider"]);
                     await mySqlConnection.CloseAsync(); 
                 }
 
             }
             foreach (var art in articless)
             {
-                if (!string.IsNullOrEmpty(art.events.Id))
+                if (!string.IsNullOrEmpty(art.EventsProp.Id))
                 {
-                    var eventsComando = $"select * from events where id = '{art.events.Id}'";
+                    var eventsComando = $"select * from events where id = '{art.EventsProp.Id}'";
                     await mySqlConnection.OpenAsync();
                     MySqlCommand eventsMySqlCommand = new MySqlCommand(eventsComando, mySqlConnection);
                     MySqlDataReader eventsMySqlDataReader = (MySqlDataReader)await eventsMySqlCommand.ExecuteReaderAsync();
                     eventsMySqlDataReader.Read();
-                    art.events.Provider = Convert.ToString(eventsMySqlDataReader["provider"]);
+                    art.EventsProp.Provider = Convert.ToString(eventsMySqlDataReader["provider"]);
                     await mySqlConnection.CloseAsync();
                 }
 
@@ -112,8 +118,8 @@ namespace ApiDesafioCoodesh.Repositories
                     PublishedAt = (DateTime)mySqlDataReader["publishedAt"],
                     UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
-                    launches = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },
-                    events = new Events { Id = Convert.ToString(mySqlDataReader["events_fk"]) }
+                    LaunchesProp = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },
+                    EventsProp = new Events { Id = Convert.ToString(mySqlDataReader["events_fk"]) }
 
                 };
                 await mySqlConnection.CloseAsync();
@@ -121,24 +127,24 @@ namespace ApiDesafioCoodesh.Repositories
                 {
                     return null;
                 }
-                if (!string.IsNullOrEmpty(articles.launches.Id))
+                if (!string.IsNullOrEmpty(articles.LaunchesProp.Id))
                 {
-                    var launchesComando = $"select * from launches where id = '{articles.launches.Id}'";
+                    var launchesComando = $"select * from launches where id = '{articles.LaunchesProp.Id}'";
                     await mySqlConnection.OpenAsync();
                     MySqlCommand launchesMySqlCommand = new MySqlCommand(launchesComando, mySqlConnection);
                     MySqlDataReader launchesMySqlDataReader = (MySqlDataReader)await launchesMySqlCommand.ExecuteReaderAsync();
                     launchesMySqlDataReader.Read();
-                    articles.launches.Provider = Convert.ToString(launchesMySqlDataReader["provider"]);
+                    articles.LaunchesProp.Provider = Convert.ToString(launchesMySqlDataReader["provider"]);
                     await mySqlConnection.CloseAsync();
                 }
-                if (!string.IsNullOrEmpty(articles.events.Id))
+                if (!string.IsNullOrEmpty(articles.EventsProp.Id))
                 {
-                    var eventsComando = $"select * from events where id = '{articles.events.Id}'";
+                    var eventsComando = $"select * from events where id = '{articles.EventsProp.Id}'";
                     await mySqlConnection.OpenAsync();
                     MySqlCommand eventsMySqlCommand = new MySqlCommand(eventsComando, mySqlConnection);
                     MySqlDataReader eventsMySqlDataReader = (MySqlDataReader)await eventsMySqlCommand.ExecuteReaderAsync();
                     eventsMySqlDataReader.Read();
-                    articles.events.Provider = Convert.ToString(eventsMySqlDataReader["provider"]);
+                    articles.EventsProp.Provider = Convert.ToString(eventsMySqlDataReader["provider"]);
                     await mySqlConnection.CloseAsync();
                 }
             }

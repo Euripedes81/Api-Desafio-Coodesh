@@ -1,4 +1,6 @@
-﻿using ApiDesafioCoodesh.Repositories;
+﻿using ApiDesafioCoodesh.Entities;
+using ApiDesafioCoodesh.InputModel;
+using ApiDesafioCoodesh.Repositories;
 using ApiDesafioCoodesh.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -15,20 +17,51 @@ namespace ApiDesafioCoodesh.Services
         {
             _articlesRepository = articlesRepository;
         }
-        public Task Atualizar(ArticlesViewModel articlesViewModel)
+        public Task Atualizar(ArticlesInputModel articlesInputModel)
         {
             throw new NotImplementedException();
         }
+
+        public async Task<ArticlesViewModel> Inserir(ArticlesInputModel articlesInputModel)
+        {
+            var articlesInsert = new Articles
+            {
+                Id = articlesInputModel.Id,
+                Title = articlesInputModel.Title,
+                Url = articlesInputModel.Url,
+                ImageUrl = articlesInputModel?.ImageUrl,
+                NewsSite = articlesInputModel.NewsSite,
+                Summary = articlesInputModel.Summary,
+                PublishedAt = articlesInputModel.PublishedAt,
+                Featured = articlesInputModel.Featured,
+                LaunchesProp = new Launches { Id = articlesInputModel.LaunchesProp.Id, Provider = articlesInputModel.LaunchesProp.Provider },
+                EventsProp = new Events { Id = articlesInputModel.EventsProp.Id, Provider=articlesInputModel.EventsProp.Provider }
+            };
+            
+            await _articlesRepository.Inserir(articlesInsert);
+            
+            return new ArticlesViewModel
+            {
+                Id = articlesInsert.Id,
+                Title = articlesInsert.Title,
+                Url = articlesInsert?.Url,
+                ImageUrl = articlesInsert?.ImageUrl,
+                NewsSite = articlesInsert.NewsSite,
+                Summary = articlesInsert.Summary,
+                PublishedAt= articlesInsert.PublishedAt,
+                UpdateAt = articlesInsert.UpdateAt,
+                Featured = articlesInsert.Featured,
+                LaunchesProp = articlesInsert.LaunchesProp,
+                EventsProp= articlesInsert.EventsProp
+            };
+        }
+
 
         //public void Dispose()
         //{
         //    throw new NotImplementedException();
         //}
 
-        public Task Inserir(ArticlesViewModel articlesViewModel)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<List<ArticlesViewModel>> Obter(int pagina, int quantidade)
         {
@@ -44,8 +77,8 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                Launches = articles.launches,
-                Events = articles.events
+                LaunchesProp = articles.LaunchesProp,
+                EventsProp = articles.EventsProp
 
             }).ToList();
         }
@@ -68,8 +101,8 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                Launches = articles.launches,
-                Events = articles.events
+                LaunchesProp = articles.LaunchesProp,
+                EventsProp = articles.EventsProp
             };
         }
 
@@ -77,5 +110,7 @@ namespace ApiDesafioCoodesh.Services
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }
