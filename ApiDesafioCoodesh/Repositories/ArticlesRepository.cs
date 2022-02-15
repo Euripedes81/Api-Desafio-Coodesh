@@ -14,11 +14,17 @@ namespace ApiDesafioCoodesh.Repositories
         public ArticlesRepository(IConfiguration configuration)
         {
             //mySqlConnection = new MySqlConnection("mysql://y04qwys3d1pfe3ai:giw8ybslfeqf3u9o@yjo6uubt3u5c16az.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/lckckfanuue501ed");
-            mySqlConnection = new MySqlConnection(@"server=yjo6uubt3u5c16az.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;database=lckckfanuue501ed;uid=y04qwys3d1pfe3ai;pwd=giw8ybslfeqf3u9o");
+            mySqlConnection = new MySqlConnection(@"server=yjo6uubt3u5c16az.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;database=lckckfanuue501ed;uid=y04qwys3d1pfe3ai;pwd=giw8ybslfeqf3u9o;convert zero datetime=True");
         }
-        public Task Atualizar(Articles articles)
+        public async Task Atualizar(Articles articles)
         {
-            throw new NotImplementedException();
+           var comando = $"update articles set  title = '{articles.Title}', url = '{articles.Url}', imageUrl = '{articles.ImageUrl}'," +
+                $" newsSite = '{articles.NewsSite}', summary = '{articles.Summary}', publishedAt = '{articles.PublishedAt}'," +
+                $" featured = '{articles.Featured}', launches_fk = '{articles.LaunchesProp.Id}', events_fk = '{articles.EventsProp.Id}' where id = '{articles.Id}'";
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            await mySqlConnection.CloseAsync();
         }
 
         //public void Dispose()
@@ -54,7 +60,7 @@ namespace ApiDesafioCoodesh.Repositories
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["url"],
-                    PublishedAt = Convert.ToDateTime( mySqlDataReader["publishedAt"]),
+                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),
                     UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
                     LaunchesProp = new Launches { Id = Convert.ToString(mySqlDataReader["launches_fk"]) },

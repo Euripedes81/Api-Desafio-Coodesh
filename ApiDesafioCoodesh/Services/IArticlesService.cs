@@ -11,7 +11,7 @@ namespace ApiDesafioCoodesh.Services
         Task<List<ArticlesViewModel>> Obter(int pagina, int quantidade);
         Task<ArticlesViewModel> Obter(int id);
         Task<ArticlesViewModel> Inserir(ArticlesInputModel articlesInputModel);
-        Task Atualizar(ArticlesInputModel articlesInputModel);
+        Task Atualizar(int id, ArticlesInputModel articlesInputModel);
         Task Remover(int id);
     }
 }

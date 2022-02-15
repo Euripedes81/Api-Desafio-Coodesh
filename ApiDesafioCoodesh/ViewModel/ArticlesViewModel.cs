@@ -14,7 +14,7 @@ namespace ApiDesafioCoodesh.ViewModel
         public DateTime PublishedAt { get; set; }
         public DateTime UpdateAt { get; set; }
         public bool Featured { get; set; }
-        public Launches LaunchesProp { get; set; }
-        public Events EventsProp { get; set; }
+        public Launches launches { get; set; }
+        public Events events { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using ApiDesafioCoodesh.Services;
 using ApiDesafioCoodesh.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -45,6 +46,35 @@ namespace ApiDesafioCoodesh.Controllers.V1
         {
             var articles = await _articlesService.Inserir(articlesInputModel);
             return base.Ok((object)articles);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put ([FromRoute] int id, [FromBody] ArticlesInputModel articlesInputModel)
+        {
+            try
+            {
+                await _articlesService.Atualizar(id, articlesInputModel);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return NotFound("Articles not found!");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete ([FromRoute] int id)
+        {
+            try
+            {
+                await _articlesService.Remover(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return NotFound("Articles not found!");
+            }
         }
     }
 }
