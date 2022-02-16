@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace ApiDesafioCoodesh.ViewModel
+namespace ApiDesafioCoodesh.InputModel
 {
-    public class ArticlesViewModel
+    public class ArticleInputModel
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -12,10 +12,10 @@ namespace ApiDesafioCoodesh.ViewModel
         public string ImageUrl { get; set; }
         public string NewsSite { get; set; }
         public string Summary { get; set; }
-        public DateTime PublishedAt { get; set; }
+        public DateTime PublishedAt { get; set; }       
         public DateTime UpdateAt { get; set; }
         public bool Featured { get; set; }
-        public List<Launches> Launches { get; set; }
-        public List<Events> Events { get; set; }        
+
+
     }
 }

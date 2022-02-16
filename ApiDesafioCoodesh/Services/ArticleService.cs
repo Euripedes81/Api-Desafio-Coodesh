@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace ApiDesafioCoodesh.Services
 {
-    public class ArticlesService : IArticlesService
+    public class ArticleService : IArticleService
     {
-        private readonly IArticlesRepository _articlesRepository;
+        private readonly IArticleRepository _articlesRepository;
 
-        public ArticlesService(IArticlesRepository articlesRepository)
+        public ArticleService(IArticleRepository articlesRepository)
         {
             _articlesRepository = articlesRepository;
         }
-        public async Task Atualizar(int id, ArticlesInputModel articlesInputModel)
+        public async Task Atualizar(int id, ArticleInputModel articlesInputModel)
         {
             var articles = await _articlesRepository.Obter(id);
             if (articles == null)
@@ -37,9 +37,9 @@ namespace ApiDesafioCoodesh.Services
             }
         }
 
-        public async Task<ArticlesViewModel> Inserir(ArticlesInputModel articlesInputModel)
+        public async Task<ArticleViewModel> Inserir(ArticleInputModel articlesInputModel)
         {
-            var articlesInsert = new Articles
+            var articlesInsert = new Article
             {
                 Title = articlesInputModel.Title,
                 Url = articlesInputModel.Url,
@@ -51,7 +51,7 @@ namespace ApiDesafioCoodesh.Services
             
             await _articlesRepository.Inserir(articlesInsert);
             
-            return new ArticlesViewModel
+            return new ArticleViewModel
             {
                 Id = articlesInsert.Id,
                 Title = articlesInsert.Title,
@@ -66,10 +66,10 @@ namespace ApiDesafioCoodesh.Services
             };
         }       
 
-        public async Task<List<ArticlesViewModel>> Obter(int pagina, int quantidade)
+        public async Task<List<ArticleViewModel>> Obter(int pagina, int quantidade)
         {
-            var articless = await _articlesRepository.Obter(pagina, quantidade);
-            return articless.Select(articles => new ArticlesViewModel
+            var articles = await _articlesRepository.Obter(pagina, quantidade);
+            return articles.Select(articles => new ArticleViewModel
             {
                 Id = articles.Id,
                 Title = articles.Title,
@@ -80,19 +80,19 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                Launches = articles.Launchess
+                Launches = articles.Launches
 
             }).ToList();
         }
 
-        public async Task<ArticlesViewModel> Obter(int id)
+        public async Task<ArticleViewModel> Obter(int id)
         {
             var articles = await _articlesRepository.Obter(id);
             if(articles == null)
             {
                 return null;
             }
-            return new ArticlesViewModel
+            return new ArticleViewModel
             {
                 Id = articles.Id,
                 Title = articles.Title,
@@ -103,8 +103,8 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                Launches = articles.Launchess,
-                Events = articles.Eventss
+                Launches = articles.Launches,
+                Events = articles.Events
             };
         }
 

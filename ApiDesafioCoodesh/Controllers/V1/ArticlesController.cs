@@ -14,9 +14,9 @@ namespace ApiDesafioCoodesh.Controllers.V1
     [ApiController]
     public class ArticlesController : ControllerBase
     {
-        private readonly IArticlesService _articlesService;
+        private readonly IArticleService _articlesService;
 
-        public ArticlesController(IArticlesService articlesService)
+        public ArticlesController(IArticleService articlesService)
         {
             _articlesService = articlesService;
         }
@@ -31,7 +31,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ArticlesViewModel>> GetId([FromRoute] int id)
+        public async Task<ActionResult<ArticleViewModel>> GetId([FromRoute] int id)
         {
             var articlesViewModel = await _articlesService.Obter(id);
             if (articlesViewModel == null)
@@ -42,14 +42,14 @@ namespace ApiDesafioCoodesh.Controllers.V1
         }
 
         [HttpPost]
-        public async Task<ActionResult<ArticlesViewModel>> Post([FromBody] ArticlesInputModel articlesInputModel)
+        public async Task<ActionResult<ArticleViewModel>> Post([FromBody] ArticleInputModel articlesInputModel)
         {
             var articles = await _articlesService.Inserir(articlesInputModel);
             return base.Ok((object)articles);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put ([FromRoute] int id, [FromBody] ArticlesInputModel articlesInputModel)
+        public async Task<ActionResult> Put ([FromRoute] int id, [FromBody] ArticleInputModel articlesInputModel)
         {
             try
             {

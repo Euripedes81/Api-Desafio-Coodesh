@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ApiDesafioCoodesh.Entities
 {
-    public class Articles
+    public class Article
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -14,13 +14,13 @@ namespace ApiDesafioCoodesh.Entities
         public DateTime PublishedAt { get; set; }
         public DateTime UpdateAt { get; set; }
         public bool Featured { get; set; }       
-        public List<Launches> Launchess { get; set; }
-        public List<Events> Eventss { get; set; }
+        public List<Launch> Launches { get; set; }
+        public List<Event> Events { get; set; }
 
-        public Articles()
+        public Article()
         {
-            Launchess = new List<Launches>();
-            Eventss = new List<Events>();
+            Launches = new List<Launch>();
+            Events = new List<Event>();
         }
 
     }

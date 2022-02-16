@@ -29,8 +29,8 @@ namespace ApiDesafioCoodesh
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddScoped<IArticlesService, ArticlesService>();
-            services.AddScoped<IArticlesRepository, ArticlesRepository>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
