@@ -80,7 +80,8 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                Launches = articles.Launches
+                Launches = articles.Launches,
+                Events = articles.Events
 
             }).ToList();
         }
@@ -110,10 +111,10 @@ namespace ApiDesafioCoodesh.Services
 
         public async Task Remover(int id)
         {
-            var articles = await _articlesRepository.Obter(id);
-            if(articles == null)
+            var article = await _articlesRepository.Obter(id);
+            if(article == null)
             {
-                throw new Exception("Articles not found!");
+                throw new Exception("Article not found!");
             }
 
             await _articlesRepository.Remover(id);

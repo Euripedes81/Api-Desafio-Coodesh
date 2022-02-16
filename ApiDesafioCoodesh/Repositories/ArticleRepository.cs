@@ -19,7 +19,7 @@ namespace ApiDesafioCoodesh.Repositories
         }
         public async Task Atualizar(Article articles)
         {
-           var comando = $"update articles set  title = '{articles.Title}', url = '{articles.Url}', imageUrl = '{articles.ImageUrl}'," +
+           var comando = $"update article set  title = '{articles.Title}', url = '{articles.Url}', imageUrl = '{articles.ImageUrl}'," +
                 $" newsSite = '{articles.NewsSite}', summary = '{articles.Summary}', publishedAt = '{articles.PublishedAt}'," +
                 $" featured = '{articles.Featured}' where id = '{articles.Id}'";
             await mySqlConnection.OpenAsync();
@@ -35,7 +35,7 @@ namespace ApiDesafioCoodesh.Repositories
 
         public async Task Inserir(Article articles)
         {
-            var comando = "insert into articles (id, title, url, imageUrl, newsSite, summary, publishedAt, featured)" +
+            var comando = "insert into article (id, title, url, imageUrl, newsSite, summary, publishedAt, featured)" +
                 $" values ('{articles.Id}', '{articles.Title}', '{articles.Url}', '{articles.ImageUrl}', '{articles.NewsSite}', '{articles.Summary}', '{articles.PublishedAt}', '{articles.Featured}')";
             await mySqlConnection.OpenAsync();
             MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
@@ -47,7 +47,7 @@ namespace ApiDesafioCoodesh.Repositories
         public async Task<List<Article>> Obter(int pagina, int quantidade)
         {
             var articles = new List<Article>();
-            var comando = $"select * from articles order by id  limit {quantidade} offset {((pagina - 1) * quantidade)}";
+            var comando = $"select * from article order by id  limit {quantidade} offset {((pagina - 1) * quantidade)}";
             await mySqlConnection.OpenAsync();
             MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
             MySqlDataReader mySqlDataReader = (MySqlDataReader)await mySqlCommand.ExecuteReaderAsync();            
@@ -60,7 +60,7 @@ namespace ApiDesafioCoodesh.Repositories
                     Url = (string)mySqlDataReader["url"],
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
-                    Summary = (string)mySqlDataReader["url"],
+                    Summary = (string)mySqlDataReader["summary"],
                     PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),
                    // UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"]),                    
@@ -68,10 +68,13 @@ namespace ApiDesafioCoodesh.Repositories
                 });
             }
             await mySqlConnection.CloseAsync();
+           
             List<Article> articlesAux = new List<Article>();
+
             foreach(var article in articles)
             {
                 article.Launches = ObterLaunches(article.Id);
+                article.Events = ObterEvents(article.Id);
                 articlesAux.Add(article);
             }
             return articlesAux;
@@ -79,14 +82,14 @@ namespace ApiDesafioCoodesh.Repositories
 
         public async Task<Article> Obter(int id)
         {
-            Article articles = null;
-            var comando = $"select * from articles where id = '{id}'";
+            Article article = null;
+            var comando = $"select * from article where id = '{id}'";
             await mySqlConnection.OpenAsync();
             MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
             MySqlDataReader mySqlDataReader = (MySqlDataReader)await mySqlCommand.ExecuteReaderAsync();
             if (mySqlDataReader.Read())
             {                
-                articles = new Article
+                article = new Article
                 {
                     Id = (int)mySqlDataReader["id"],
                     Title = (string)mySqlDataReader["title"],
@@ -95,29 +98,31 @@ namespace ApiDesafioCoodesh.Repositories
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["url"],
                     PublishedAt = (DateTime)mySqlDataReader["publishedAt"],
-                    UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
+                    //UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
-                    //Launchess = lch,
-                    //Eventss = even
-                };
-               
-              
-                await mySqlConnection.CloseAsync();
-               
+                    
+                };           
+                await mySqlConnection.CloseAsync();                             
+                article.Launches = ObterLaunches(article.Id);
+                article.Events = ObterEvents(article.Id);                 
             }
-            return articles;
+            return article;
 
         }
 
-        public Task Remover(int id)
+        public async Task Remover(int id)
         {
-            throw new NotImplementedException();
+            var comando = $"delete from article where id = '{id}'";
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            await mySqlConnection.CloseAsync();
         }
 
-        public List<Launch> ObterLaunches(int idArticles)
+        public List<Launch> ObterLaunches(int idArticle)
         {
             var launches = new List<Launch>();
-            var comando = $"select * from launches where id = '{idArticles}'";
+            var comando = $"select * from launch where id = '{idArticle}'";
             mySqlConnection.Open();
             MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
             MySqlDataReader mySqlDataReader = (MySqlDataReader) mySqlCommand.ExecuteReader();
@@ -133,6 +138,26 @@ namespace ApiDesafioCoodesh.Repositories
             mySqlConnection.Close();
 
             return launches;
+        }
+        public List<Event> ObterEvents(int idArticle)
+        {
+            var events = new List<Event>();
+            var comando = $"select * from event where id = '{idArticle}'";
+            mySqlConnection.Open();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            MySqlDataReader mySqlDataReader = (MySqlDataReader)mySqlCommand.ExecuteReader();
+            while (mySqlDataReader.Read())
+            {
+                events.Add(new Event
+                {
+                    Id = (string)mySqlDataReader["id"],
+                    Provider = (string)mySqlDataReader["provider"]
+
+                });
+            }
+            mySqlConnection.Close();
+
+            return events;
         }
     }
 }
