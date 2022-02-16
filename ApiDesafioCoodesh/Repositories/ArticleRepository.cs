@@ -14,8 +14,7 @@ namespace ApiDesafioCoodesh.Repositories
         public ArticleRepository(IConfiguration configuration)
         {
             mySqlConnection = new MySqlConnection(@"server=x8autxobia7sgh74.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;database=of0pkqgq9unpjqua;uid=sbpkruojpnkxzhol;pwd=irdicmhft81rqc3o;convert zero datetime=True");
-            //mySqlConnection = new MySqlConnection(@"server=yjo6uubt3u5c16az.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;
-            //        database=lckckfanuue501ed;uid=y04qwys3d1pfe3ai;pwd=giw8ybslfeqf3u9o;convert zero datetime=True");
+          
         }
         public async Task Atualizar(Article articles)
         {
@@ -28,11 +27,7 @@ namespace ApiDesafioCoodesh.Repositories
             await mySqlConnection.CloseAsync();
         }
 
-        //public void Dispose()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
+      
         public async Task Inserir(Article articles)
         {
             var comando = "insert into article (id, title, url, imageUrl, newsSite, summary, publishedAt, featured)" +
@@ -158,6 +153,12 @@ namespace ApiDesafioCoodesh.Repositories
             mySqlConnection.Close();
 
             return events;
+        }
+
+        public void Dispose()
+        {
+            mySqlConnection?.Close();
+            mySqlConnection?.Dispose();
         }
     }
 }

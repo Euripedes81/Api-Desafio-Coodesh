@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ApiDesafioCoodesh.Repositories
 {
-    public interface IArticleRepository //: IDisposable
+    public interface IArticleRepository : IDisposable
     {
         Task<List<Article>> Obter(int pagina, int quantidade);
         Task<Article> Obter(int id);

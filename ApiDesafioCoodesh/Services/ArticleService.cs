@@ -107,12 +107,7 @@ namespace ApiDesafioCoodesh.Services
                 Launches = articles.Launches,
                 Events = articles.Events
             };
-        }
-
-        public MensagemViewModel ObterMensagem()
-        {
-            return new MensagemViewModel();
-        }
+        }       
 
         public async Task Remover(int id)
         {
@@ -125,10 +120,10 @@ namespace ApiDesafioCoodesh.Services
             await _articlesRepository.Remover(id);
         }
 
-        //public void Dispose()
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public void Dispose()
+        {
+           _articlesRepository?.Dispose();
+        }
 
     }
 }
