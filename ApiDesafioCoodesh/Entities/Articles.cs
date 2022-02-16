@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ApiDesafioCoodesh.Entities
 {
@@ -12,8 +13,15 @@ namespace ApiDesafioCoodesh.Entities
         public string Summary { get; set; }
         public DateTime PublishedAt { get; set; }
         public DateTime UpdateAt { get; set; }
-        public bool Featured { get; set; }
-        public Launches LaunchesProp { get; set; }
-        public Events EventsProp { get; set; }
+        public bool Featured { get; set; }       
+        public List<Launches> Launchess { get; set; }
+        public List<Events> Eventss { get; set; }
+
+        public Articles()
+        {
+            Launchess = new List<Launches>();
+            Eventss = new List<Events>();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using ApiDesafioCoodesh.Entities;
 using System;
+using System.Collections.Generic;
 
 namespace ApiDesafioCoodesh.ViewModel
 {
@@ -14,7 +15,7 @@ namespace ApiDesafioCoodesh.ViewModel
         public DateTime PublishedAt { get; set; }
         public DateTime UpdateAt { get; set; }
         public bool Featured { get; set; }
-        public Launches launches { get; set; }
-        public Events events { get; set; }
+        public List<Launches> Launches { get; set; }
+        public List<Events> Events { get; set; }        
     }
 }

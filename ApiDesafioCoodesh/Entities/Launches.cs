@@ -1,8 +1,10 @@
-﻿namespace ApiDesafioCoodesh.Entities
+﻿using System.Collections.Generic;
+
+namespace ApiDesafioCoodesh.Entities
 {
     public class Launches
     {
         public string Id { get; set; }
-        public string Provider { get; set; }
+        public string Provider { get; set; }       
     }
 }

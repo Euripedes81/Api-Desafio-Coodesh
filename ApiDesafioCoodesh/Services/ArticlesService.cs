@@ -32,9 +32,7 @@ namespace ApiDesafioCoodesh.Services
                 articles.NewsSite = articlesInputModel.NewsSite;
                 articles.Summary = articlesInputModel.Summary;
                 articles.PublishedAt = articlesInputModel.PublishedAt;
-                articles.Featured = articlesInputModel.Featured;
-                articles.LaunchesProp = new Launches { Id = articlesInputModel.LaunchesId };
-                articles.EventsProp = new Events { Id = articlesInputModel.EventsId };
+                articles.Featured = articlesInputModel.Featured;                
                 await _articlesRepository.Atualizar(articles);
             }
         }
@@ -42,16 +40,13 @@ namespace ApiDesafioCoodesh.Services
         public async Task<ArticlesViewModel> Inserir(ArticlesInputModel articlesInputModel)
         {
             var articlesInsert = new Articles
-            {                
+            {
                 Title = articlesInputModel.Title,
                 Url = articlesInputModel.Url,
                 ImageUrl = articlesInputModel?.ImageUrl,
                 NewsSite = articlesInputModel.NewsSite,
                 Summary = articlesInputModel.Summary,
-                PublishedAt = articlesInputModel.PublishedAt,
-                Featured = articlesInputModel.Featured,
-                LaunchesProp = new Launches { Id = articlesInputModel.LaunchesId},
-                EventsProp = new Events { Id = articlesInputModel.EventsId }
+                PublishedAt = articlesInputModel.PublishedAt,               
             };
             
             await _articlesRepository.Inserir(articlesInsert);
@@ -66,9 +61,8 @@ namespace ApiDesafioCoodesh.Services
                 Summary = articlesInsert.Summary,
                 PublishedAt= articlesInsert.PublishedAt,
                 UpdateAt = articlesInsert.UpdateAt,
-                Featured = articlesInsert.Featured,
-                launches = articlesInsert.LaunchesProp,
-                events= articlesInsert.EventsProp
+                Featured = articlesInsert.Featured
+                
             };
         }       
 
@@ -86,8 +80,7 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                launches = articles.LaunchesProp,
-                events = articles.EventsProp
+                Launches = articles.Launchess
 
             }).ToList();
         }
@@ -110,8 +103,8 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articles.PublishedAt,
                 UpdateAt = articles.UpdateAt,
                 Featured = articles.Featured,
-                launches = articles.LaunchesProp,
-                events = articles.EventsProp
+                Launches = articles.Launchess,
+                Events = articles.Eventss
             };
         }
 
