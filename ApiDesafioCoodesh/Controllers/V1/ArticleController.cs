@@ -12,14 +12,15 @@ namespace ApiDesafioCoodesh.Controllers.V1
 {
     [Route("api/V1/[controller]")]
     [ApiController]
-    public class ArticlesController : ControllerBase
+    public class ArticleController : ControllerBase
     {
         private readonly IArticleService _articlesService;
 
-        public ArticlesController(IArticleService articlesService)
+        public ArticleController(IArticleService articlesService)
         {
             _articlesService = articlesService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery, Range(1, int.MaxValue)] int pagina = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
@@ -29,6 +30,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
                 return NoContent();
             return Ok(articles);
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ArticleViewModel>> GetId([FromRoute] int id)

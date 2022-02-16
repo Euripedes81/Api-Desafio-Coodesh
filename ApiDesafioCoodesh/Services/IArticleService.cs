@@ -13,5 +13,6 @@ namespace ApiDesafioCoodesh.Services
         Task<ArticleViewModel> Inserir(ArticleInputModel articlesInputModel);
         Task Atualizar(int id, ArticleInputModel articlesInputModel);
         Task Remover(int id);
+        public MensagemViewModel ObterMensagem();
     }
 }

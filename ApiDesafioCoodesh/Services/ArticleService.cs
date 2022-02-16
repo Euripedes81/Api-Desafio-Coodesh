@@ -109,6 +109,11 @@ namespace ApiDesafioCoodesh.Services
             };
         }
 
+        public MensagemViewModel ObterMensagem()
+        {
+            return new MensagemViewModel();
+        }
+
         public async Task Remover(int id)
         {
             var article = await _articlesRepository.Obter(id);
