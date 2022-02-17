@@ -35,21 +35,14 @@ namespace HttpClientDesafioCoodesh
                         articleList = JsonConvert.DeserializeObject<List<Article>>(apiResponse);
 
                         foreach (var article in articleList)
-                        {
-
-                            foreach (var launch in article.Launches)
-                            {
-                                article.Launches = JsonConvert.DeserializeObject<List<Launch>>(apiResponse);
-                                //Console.WriteLine($"Id:{article.Id} Title: {article.Title} -  Launches: {launch.Id} {launch.Provider}");
-                            }
-                            foreach (var events in article.Events)
-                            {
-                                article.Events = JsonConvert.DeserializeObject<List<Event>>(apiResponse);
-                                // Console.WriteLine($"Id:{article.Id} Title: {article.Title} -  Launches: {events.Id} {events.Provider}");
-                            }
+                        {                     
+                             
+                            article.Title = article.Title.Replace("'", "\\'");
                             articleRepository.Inserir(article);
                             Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title}");
-                        }
+
+                        }                      
+                       
                         
                     }
                     else

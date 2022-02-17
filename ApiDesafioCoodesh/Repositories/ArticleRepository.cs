@@ -21,10 +21,7 @@ namespace ApiDesafioCoodesh.Repositories
            var comando = $"update article set  title = '{articles.Title}', url = '{articles.Url}', imageUrl = '{articles.ImageUrl}'," +
                 $" newsSite = '{articles.NewsSite}', summary = '{articles.Summary}', publishedAt = '{articles.PublishedAt}'," +
                 $" featured = '{articles.Featured}' where id = '{articles.Id}'";
-            await mySqlConnection.OpenAsync();
-            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
-            mySqlCommand.ExecuteNonQuery();
-            await mySqlConnection.CloseAsync();
+           ExecutarComandoDB(comando);
         }
 
       
@@ -32,11 +29,7 @@ namespace ApiDesafioCoodesh.Repositories
         {
             var comando = "insert into article (id, title, url, imageUrl, newsSite, summary, publishedAt, featured)" +
                 $" values ('{articles.Id}', '{articles.Title}', '{articles.Url}', '{articles.ImageUrl}', '{articles.NewsSite}', '{articles.Summary}', '{articles.PublishedAt}', '{articles.Featured}')";
-            await mySqlConnection.OpenAsync();
-            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
-            mySqlCommand.ExecuteNonQuery();
-            await mySqlConnection.CloseAsync();            
-
+            ExecutarComandoDB(comando);
         }
 
         public async Task<List<Article>> Obter(int pagina, int quantidade)
@@ -154,7 +147,13 @@ namespace ApiDesafioCoodesh.Repositories
 
             return events;
         }
-
+        private void ExecutarComandoDB(string comando)
+        {
+            mySqlConnection.Open();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            mySqlConnection.Close();
+        }
         public void Dispose()
         {
             mySqlConnection?.Close();

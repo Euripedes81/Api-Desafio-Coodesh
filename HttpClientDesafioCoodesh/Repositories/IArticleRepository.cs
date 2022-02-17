@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HttpClientDesafioCoodesh.Repositories
 {
-    public interface IArticleRepository
+    public interface IArticleRepository : IDisposable
     {
        void Inserir(Article article);
         
