@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace HttpClientDesafioCoodesh.Entities
 {
-    internal class Launch
+    public class Launch
     {
         public string Id { get; set; }
         public string Provider { get; set; }
+        
     }
 }

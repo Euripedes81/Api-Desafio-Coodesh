@@ -1,4 +1,5 @@
 ﻿using HttpClientDesafioCoodesh.Entities;
+using HttpClientDesafioCoodesh.Repositories;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,14 @@ namespace HttpClientDesafioCoodesh
 {
     internal class Program
     {
+        static IArticleRepository articleRepository = new ArticleRepository();
         static void Main(string[] args)
         {
             CallWebAPIAsync(0).Wait();
         }
         static async Task CallWebAPIAsync(int start)
         {
+           
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.spaceflightnewsapi.net");
@@ -44,8 +47,10 @@ namespace HttpClientDesafioCoodesh
                                 article.Events = JsonConvert.DeserializeObject<List<Event>>(apiResponse);
                                 // Console.WriteLine($"Id:{article.Id} Title: {article.Title} -  Launches: {events.Id} {events.Provider}");
                             }
-                            Console.WriteLine($"Id:{article.Id} Title: {article.Title}");
+                            articleRepository.Inserir(article);
+                            Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title}");
                         }
+                        
                     }
                     else
                     {
