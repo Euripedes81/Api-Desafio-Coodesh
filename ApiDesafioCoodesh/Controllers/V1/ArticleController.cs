@@ -75,7 +75,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
             catch (Exception)
             {
 
-                return NotFound("Articles not found!");
+                return NotFound("Article not found!");
             }
         }
     }
