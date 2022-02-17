@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace ApiDesafioCoodesh.Controllers.V1
 {
-    [Route("api/V1/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ArticleController : ControllerBase
     {
-        private readonly IArticleService _articlesService;
+        private readonly IArticleService _articleService;
 
-        public ArticleController(IArticleService articlesService)
+        public ArticleController(IArticleService articleService)
         {
-            _articlesService = articlesService;
+            _articleService = articleService;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> Get([FromQuery, Range(1, int.MaxValue)] int pagina = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
         {
-            var articles = await _articlesService.Obter(pagina, quantidade);
+            var articles = await _articleService.Obter(pagina, quantidade);
             if (articles.Count() == 0)
                 return NoContent();
             return Ok(articles);
@@ -35,10 +35,10 @@ namespace ApiDesafioCoodesh.Controllers.V1
         [HttpGet("{id}")]
         public async Task<ActionResult<ArticleViewModel>> GetId([FromRoute] int id)
         {
-            var articlesViewModel = await _articlesService.Obter(id);
+            var articlesViewModel = await _articleService.Obter(id);
             if (articlesViewModel == null)
             {
-                return null;
+                return NotFound("Article not found!");
             }
             return Ok(articlesViewModel);
         }
@@ -46,7 +46,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
         [HttpPost]
         public async Task<ActionResult<ArticleViewModel>> Post([FromBody] ArticleInputModel articlesInputModel)
         {
-            var articles = await _articlesService.Inserir(articlesInputModel);
+            var articles = await _articleService.Inserir(articlesInputModel);
             return base.Ok((object)articles);
         }
 
@@ -55,7 +55,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
         {
             try
             {
-                await _articlesService.Atualizar(id, articlesInputModel);
+                await _articleService.Atualizar(id, articlesInputModel);
                 return Ok();
             }
             catch (Exception)
@@ -69,7 +69,7 @@ namespace ApiDesafioCoodesh.Controllers.V1
         {
             try
             {
-                await _articlesService.Remover(id);
+                await _articleService.Remover(id);
                 return Ok();
             }
             catch (Exception)
