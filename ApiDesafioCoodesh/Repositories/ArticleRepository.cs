@@ -91,8 +91,7 @@ namespace ApiDesafioCoodesh.Repositories
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["url"],
-                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),
-                    //UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
+                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),                    
                     Featured = Convert.ToBoolean(mySqlDataReader["featured"])
                     
                 };           

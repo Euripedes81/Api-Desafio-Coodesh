@@ -25,13 +25,10 @@ namespace ApiDesafioCoodesh
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+       
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddControllers();
@@ -43,26 +40,23 @@ namespace ApiDesafioCoodesh
             services.AddQuartz(q =>
             {
                 q.UseMicrosoftDependencyInjectionJobFactory();
-
-                // Create a "key" for the job
+               
                 var jobKey = new JobKey("Inserindo Artigos no banco");
-
-                // Register the job with the DI container
-                q.AddJob<HelloWorldJob>(opts => opts.WithIdentity(jobKey));
-
-                // Create a trigger for the job
+                
+                q.AddJob<SchedulerJob>(opts => opts.WithIdentity(jobKey));
+               
                 q.AddTrigger(opts => opts
-                    .ForJob(jobKey) // link to the HelloWorldJob
-                    .WithIdentity("Inserindo Artigos no banco") // give the trigger a unique name
-                    .WithCronSchedule("0/15 * * * * ?")); // run every 5 seconds
-            });
+                    .ForJob(jobKey) 
+                    .WithIdentity("Inserindo Artigos no banco") 
+                    //.WithCronSchedule("0 0 9 * * ?")); 
+                    .WithCronSchedule("0/15 * * * * ?")); 
+        });
            
             services.AddQuartzHostedService(q =>
                 q.WaitForJobsToComplete = true
             ); ;
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+       
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

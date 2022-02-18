@@ -9,7 +9,6 @@ namespace HttpClientDesafioCoodesh.Repositories
 {
     public interface IArticleRepository : IDisposable
     {
-       void Inserir(Article article);
-        
+        void Inserir(List<Article> articles);        
     }
 }

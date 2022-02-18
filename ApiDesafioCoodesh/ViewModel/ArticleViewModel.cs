@@ -12,8 +12,7 @@ namespace ApiDesafioCoodesh.ViewModel
         public string ImageUrl { get; set; }
         public string NewsSite { get; set; }
         public string Summary { get; set; }
-        public DateTime PublishedAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime PublishedAt { get; set; }        
         public bool Featured { get; set; }
         public List<Launch> Launches { get; set; }
         public List<Event> Events { get; set; }        

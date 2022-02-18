@@ -59,8 +59,7 @@ namespace ApiDesafioCoodesh.Services
                 ImageUrl = articlesInsert?.ImageUrl,
                 NewsSite = articlesInsert.NewsSite,
                 Summary = articlesInsert.Summary,
-                PublishedAt= articlesInsert.PublishedAt,
-                UpdateAt = articlesInsert.UpdateAt,
+                PublishedAt= articlesInsert.PublishedAt,                
                 Featured = articlesInsert.Featured
                 
             };
@@ -77,8 +76,7 @@ namespace ApiDesafioCoodesh.Services
                 ImageUrl = articles.ImageUrl,
                 NewsSite = articles.NewsSite,
                 Summary = articles.Summary,
-                PublishedAt = articles.PublishedAt,
-                UpdateAt = articles.UpdateAt,
+                PublishedAt = articles.PublishedAt,                
                 Featured = articles.Featured,
                 Launches = articles.Launches,
                 Events = articles.Events
@@ -101,8 +99,7 @@ namespace ApiDesafioCoodesh.Services
                 ImageUrl = articles.ImageUrl,
                 NewsSite = articles.NewsSite,
                 Summary = articles.Summary,
-                PublishedAt = articles.PublishedAt,
-                UpdateAt = articles.UpdateAt,
+                PublishedAt = articles.PublishedAt,                
                 Featured = articles.Featured,
                 Launches = articles.Launches,
                 Events = articles.Events

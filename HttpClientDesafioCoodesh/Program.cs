@@ -39,12 +39,13 @@ namespace HttpClientDesafioCoodesh
                         {                     
                              
                             article.Title = article.Title.Replace("'", "\\'");
-                           // articleRepository.Inserir(article);
-                            Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title} {article.PublishedAt} {article.UpdateAt}");
+                            
+                            Console.WriteLine($"Id:{article.Id} Title: {article.Title}");
 
-                        }                      
-                       
-                        
+                        }
+                        Console.WriteLine("Salvando...");
+                        articleRepository.Inserir(articleList);
+
                     }
                     else
                     {
@@ -52,7 +53,7 @@ namespace HttpClientDesafioCoodesh
                     }
                     start += 100;
                 } while (articleList.Count >= 100);
+            }
         }
     }
-}
 }

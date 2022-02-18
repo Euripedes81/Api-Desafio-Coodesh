@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 namespace ApiDesafioCoodesh.Jobs
 {
     [DisallowConcurrentExecution]
-    public class HelloWorldJob : IJob
+    public class SchedulerJob : IJob
     {
-        private readonly ILogger<HelloWorldJob> _logger;
+        private readonly ILogger<SchedulerJob> _logger;
 
-        public HelloWorldJob(ILogger<HelloWorldJob> logger)
+        public SchedulerJob(ILogger<SchedulerJob> logger)
         {
             _logger = logger;
         }
