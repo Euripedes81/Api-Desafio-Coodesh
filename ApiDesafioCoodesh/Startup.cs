@@ -1,3 +1,4 @@
+using ApiDesafioCoodesh.Jobs;
 using ApiDesafioCoodesh.Repositories;
 using ApiDesafioCoodesh.Services;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,27 @@ namespace ApiDesafioCoodesh
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiDesafioCoodesh", Version = "v1" });
             });
+            
+            services.AddQuartz(q =>
+            {
+                q.UseMicrosoftDependencyInjectionJobFactory();
+
+                // Create a "key" for the job
+                var jobKey = new JobKey("Inserindo Artigos no banco");
+
+                // Register the job with the DI container
+                q.AddJob<HelloWorldJob>(opts => opts.WithIdentity(jobKey));
+
+                // Create a trigger for the job
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey) // link to the HelloWorldJob
+                    .WithIdentity("Inserindo Artigos no banco") // give the trigger a unique name
+                    .WithCronSchedule("0/15 * * * * ?")); // run every 5 seconds
+            });
+           
+            services.AddQuartzHostedService(q =>
+                q.WaitForJobsToComplete = true
+            ); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

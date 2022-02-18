@@ -9,12 +9,13 @@ using System.Threading.Tasks;
 
 namespace HttpClientDesafioCoodesh
 {
-    internal class Program
+    public class Program
     {
-        static IArticleRepository articleRepository = new ArticleRepository();
-        static void Main(string[] args)
+        public static IArticleRepository articleRepository = new ArticleRepository();
+        public static void Main(string[] args)
         {
-            CallWebAPIAsync(0).Wait();
+            int start = Convert.ToInt32(args[0]); 
+            CallWebAPIAsync(start).Wait();
         }
         static async Task CallWebAPIAsync(int start)
         {
@@ -38,8 +39,8 @@ namespace HttpClientDesafioCoodesh
                         {                     
                              
                             article.Title = article.Title.Replace("'", "\\'");
-                            articleRepository.Inserir(article);
-                            Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title}");
+                           // articleRepository.Inserir(article);
+                            Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title} {article.PublishedAt} {article.UpdateAt}");
 
                         }                      
                        

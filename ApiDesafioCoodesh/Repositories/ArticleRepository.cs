@@ -13,7 +13,7 @@ namespace ApiDesafioCoodesh.Repositories
 
         public ArticleRepository(IConfiguration configuration)
         {
-            mySqlConnection = new MySqlConnection(@"server=x8autxobia7sgh74.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;database=of0pkqgq9unpjqua;uid=sbpkruojpnkxzhol;pwd=irdicmhft81rqc3o;convert zero datetime=True");
+            mySqlConnection = new MySqlConnection(configuration.GetConnectionString("Default"));
           
         }
         public async Task Atualizar(Article articles)
@@ -21,7 +21,10 @@ namespace ApiDesafioCoodesh.Repositories
            var comando = $"update article set  title = '{articles.Title}', url = '{articles.Url}', imageUrl = '{articles.ImageUrl}'," +
                 $" newsSite = '{articles.NewsSite}', summary = '{articles.Summary}', publishedAt = '{articles.PublishedAt}'," +
                 $" featured = '{articles.Featured}' where id = '{articles.Id}'";
-           ExecutarComandoDB(comando);
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            await mySqlConnection.CloseAsync();
         }
 
       
@@ -29,7 +32,10 @@ namespace ApiDesafioCoodesh.Repositories
         {
             var comando = "insert into article (id, title, url, imageUrl, newsSite, summary, publishedAt, featured)" +
                 $" values ('{articles.Id}', '{articles.Title}', '{articles.Url}', '{articles.ImageUrl}', '{articles.NewsSite}', '{articles.Summary}', '{articles.PublishedAt}', '{articles.Featured}')";
-            ExecutarComandoDB(comando);
+            await mySqlConnection.OpenAsync();
+            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
+            mySqlCommand.ExecuteNonQuery();
+            await mySqlConnection.CloseAsync();
         }
 
         public async Task<List<Article>> Obter(int pagina, int quantidade)
@@ -49,9 +55,9 @@ namespace ApiDesafioCoodesh.Repositories
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["summary"],
-                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),
-                   // UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
-                    Featured = Convert.ToBoolean(mySqlDataReader["featured"]),                    
+                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),                    
+                    //UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
+                    Featured = Convert.ToBoolean(mySqlDataReader["featured"])                    
 
                 });
             }
@@ -85,9 +91,9 @@ namespace ApiDesafioCoodesh.Repositories
                     ImageUrl = (string)mySqlDataReader["imageUrl"],
                     NewsSite = (string)mySqlDataReader["newsSite"],
                     Summary = (string)mySqlDataReader["url"],
-                    PublishedAt = (DateTime)mySqlDataReader["publishedAt"],
-                    //UpdateAt = (DateTime)mySqlDataReader["updatedAt"],
-                    Featured = Convert.ToBoolean(mySqlDataReader["featured"]),
+                    PublishedAt = Convert.ToDateTime(mySqlDataReader["publishedAt"]),
+                    //UpdateAt = Convert.ToDateTime(mySqlDataReader["updatedAt"]),
+                    Featured = Convert.ToBoolean(mySqlDataReader["featured"])
                     
                 };           
                 await mySqlConnection.CloseAsync();                             
@@ -146,14 +152,7 @@ namespace ApiDesafioCoodesh.Repositories
             mySqlConnection.Close();
 
             return events;
-        }
-        private void ExecutarComandoDB(string comando)
-        {
-            mySqlConnection.Open();
-            MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
-            mySqlCommand.ExecuteNonQuery();
-            mySqlConnection.Close();
-        }
+        }       
         public void Dispose()
         {
             mySqlConnection?.Close();

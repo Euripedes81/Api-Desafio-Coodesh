@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiDesafioCoodesh", "ApiDesafioCoodesh\ApiDesafioCoodesh.csproj", "{95D41053-65CC-42E9-ACD9-313095969853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpClientDesafioCoodesh", "HttpClientDesafioCoodesh\HttpClientDesafioCoodesh.csproj", "{8BD9D706-34E1-4F22-8087-AA8DF70CF2CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HttpClientDesafioCoodesh", "HttpClientDesafioCoodesh\HttpClientDesafioCoodesh.csproj", "{8BD9D706-34E1-4F22-8087-AA8DF70CF2CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
