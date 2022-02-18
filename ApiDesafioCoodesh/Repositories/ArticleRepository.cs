@@ -41,7 +41,7 @@ namespace ApiDesafioCoodesh.Repositories
         public async Task<List<Article>> Obter(int pagina, int quantidade)
         {
             var articles = new List<Article>();
-            var comando = $"select * from article order by id  limit {quantidade} offset {((pagina - 1) * quantidade)}";
+            var comando = $"select * from article order by id  limit {quantidade} offset {(pagina - 1)}";
             await mySqlConnection.OpenAsync();
             MySqlCommand mySqlCommand = new MySqlCommand(comando, mySqlConnection);
             MySqlDataReader mySqlDataReader = (MySqlDataReader)await mySqlCommand.ExecuteReaderAsync();            

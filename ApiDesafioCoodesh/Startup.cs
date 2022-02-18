@@ -43,13 +43,13 @@ namespace ApiDesafioCoodesh
                
                 var jobKey = new JobKey("Inserindo Artigos no banco");
                 
-                q.AddJob<SchedulerJob>(opts => opts.WithIdentity(jobKey));
+                q.AddJob<Jobs.TaskScheduler>(opts => opts.WithIdentity(jobKey));
                
                 q.AddTrigger(opts => opts
                     .ForJob(jobKey) 
                     .WithIdentity("Inserindo Artigos no banco") 
-                    //.WithCronSchedule("0 0 9 * * ?")); 
-                    .WithCronSchedule("0/15 * * * * ?")); 
+                    .WithCronSchedule("0 0 19 * * ?")); 
+                    //.WithCronSchedule("0/15 * * * * ?")); 
         });
            
             services.AddQuartzHostedService(q =>
