@@ -4,8 +4,8 @@ Neste projeto foi desenvolvida uma API que fornece dados atualizados diariamente
 **Tecnologias usadas:**
 *	Linguagem da programação C#
 *	Asp .NET Core
-*	.NET versão 5
 *	Console Application
+*	.NET versão 5
 *	Banco de dados MySql
 *	Heroku Cloud Plataform
        
