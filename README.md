@@ -14,6 +14,8 @@ Neste projeto foi desenvolvida uma API que fornece dados atualizados diariamente
 *	Você deve baixar o projeto ou clonar do GitHub através do git clone https://github.com/Euripedes81/Api-Desafio-Coodesh.git.
 *	Depois de baixado você deve compilar e executar o projeto, em alguns segundos abrirá o navegado web com a tela do Swagger onde você poderá executar métodos de requisição HTTP: inserção, atualização, consulta e exclusão de dados.
 
+Link video de apresentação do projeto: https://www.loom.com/share/b287907b04ca41a58758fee9a2d3e886
+
 
 
 
