@@ -7,8 +7,8 @@ Neste projeto foi desenvolvida uma API que fornece dados atualizados diariamente
 *	.NET versão 5
 *	IDE Visual Studio 2022
 *	Banco de dados MySql
-*	Heroku Cloud Plataform     
-**Instruções de instalação*** 
+*	Heroku Cloud Plataform       
+####Instruções de instalação####
 *	É recomendado que você tenha instalado o DotNet 5 no seu computador.
 *	Você deve baixar o projeto ou clonar do GitHub através do git clone https://github.com/Euripedes81/Api-Desafio-Coodesh.git.
 *	Depois de baixado você deve compilar e executar o projeto, em alguns segundos abrirá o navegado web com a tela do Swagger onde você poderá executar métodos de requisição HTTP: inserção, atualização, consulta e exclusão de dados.
