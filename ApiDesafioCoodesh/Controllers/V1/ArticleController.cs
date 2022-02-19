@@ -23,9 +23,9 @@ namespace ApiDesafioCoodesh.Controllers.V1
 
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery, Range(1, int.MaxValue)] int pagina = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
+        public async Task<IActionResult> Get([FromQuery, Range(1, int.MaxValue)] int inicio = 1, [FromQuery, Range(1, 50)] int quantidade = 5)
         {
-            var articles = await _articleService.Obter(pagina, quantidade);
+            var articles = await _articleService.Obter(inicio, quantidade);
             if (articles.Count() == 0)
                 return NoContent();
             return Ok(articles);
