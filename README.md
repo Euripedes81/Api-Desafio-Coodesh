@@ -1,6 +1,6 @@
 # Api-Desafio-Coodesh
 ## Challenge by Coodesh
-Neste projeto foi desenvolvida uma API que fornece dados atualizados diariamente copiados da API Space Flight News. Para consumir os dados da API Space Flight News, foi desenvolvido um Cliente HTTP que executa um cron todos os dias às 9h selecionando somente os novos dados disponibilizados pela API e inserindo estes em um banco de dados remoto.  
+Neste projeto foi desenvolvido uma API que fornece dados atualizados diariamente copiados da API Space Flight News. Para consumir os dados da API Space Flight News, foi desenvolvido um Cliente HTTP que executa um cron todos os dias às 9h selecionando somente os novos dados disponibilizados pela API e inserindo estes em um banco de dados remoto.  
 **Tecnologias usadas:**
 *	Linguagem da programação C#
 *	Asp .NET Core
