@@ -10,7 +10,7 @@ Neste projeto foi desenvolvida uma API que fornece dados atualizados diariamente
 *	Heroku Cloud Plataform
        
 **Instruções de instalação**
-*	É recomendado que você tenha instalado o DotNet 5 no seu computador.
+*	É recomendado que você tenha instalado no seu computador o DotNet SDK 5 e o Visual Studio no seu computador.
 *	Você deve baixar o projeto ou clonar do GitHub através do git clone https://github.com/Euripedes81/Api-Desafio-Coodesh.git.
 *	Depois de baixado você deve compilar e executar o projeto, em alguns segundos abrirá o navegador web com a tela do Swagger onde você poderá executar métodos de requisição HTTP: inserção, atualização, consulta e exclusão de dados.
 
