@@ -14,7 +14,7 @@ namespace HttpClientDesafioCoodesh
         public static IArticleRepository articleRepository = new ArticleRepository();
         public static void Main(string[] args)
         {
-            int start = Convert.ToInt32(args[0]); 
+            int start = Convert.ToInt32(args[0]);            
             CallWebAPIAsync(start).Wait();
         }
         static async Task CallWebAPIAsync(int start)
@@ -38,12 +38,9 @@ namespace HttpClientDesafioCoodesh
                         foreach (var article in articleList)
                         {                     
                              
-                            article.Title = article.Title.Replace("'", "\\'");
-                            
-                            Console.WriteLine($"Id:{article.Id} Title: {article.Title}");
-
+                            article.Title = article.Title.Replace("'", "\\'");                           
                         }
-                        Console.WriteLine("Salvando...");
+                        
                         articleRepository.Inserir(articleList);
 
                     }

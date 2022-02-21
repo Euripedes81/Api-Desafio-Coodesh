@@ -11,7 +11,6 @@ namespace HttpClientDesafioCoodesh.Repositories
     internal class ArticleRepository : IArticleRepository
     {
         private readonly MySqlConnection mySqlConnection = new MySqlConnection(@"server=x8autxobia7sgh74.cbetxkdyhwsb.us-east-1.rds.amazonaws.com;database=of0pkqgq9unpjqua;uid=sbpkruojpnkxzhol;pwd=irdicmhft81rqc3o;convert zero datetime=True");
-
         public void Inserir(List<Article> articles)
         {           
             
@@ -20,12 +19,14 @@ namespace HttpClientDesafioCoodesh.Repositories
             {              
 
                 if (ObterId(article.Id))
-                {
+                {                   
                     continue;
                 }
-
+                
+                Console.WriteLine($"Salvando Id:{article.Id} Title: {article.Title}");
+               
                 var comandoSql = "insert into article (id, title, url, imageUrl, newsSite, summary, publishedAt, updatedAt, featured)" +
-                      $" values ('{article.Id}', '{article.Title}', '{article.Url}', '{article.ImageUrl}', '{article.NewsSite}', '{article.Summary}', '{article.PublishedAt}', '{article.UpdateAt}', '{article.Featured}')";
+                      $" values ('{article.Id}', '{article.Title}', '{article.Url}', '{article.ImageUrl}', '{article.NewsSite}', '{article.Summary}', '{article.PublishedAt}', '{article.UpdateAt}', {article.Featured})";
                                
                 ExecutarComandoDB(comandoSql);
 
