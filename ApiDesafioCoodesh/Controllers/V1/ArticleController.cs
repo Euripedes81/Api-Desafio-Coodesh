@@ -35,27 +35,27 @@ namespace ApiDesafioCoodesh.Controllers.V1
         [HttpGet("{id}")]
         public async Task<ActionResult<ArticleViewModel>> GetId([FromRoute] int id)
         {
-            var articlesViewModel = await _articleService.Obter(id);
-            if (articlesViewModel == null)
+            var articleViewModel = await _articleService.Obter(id);
+            if (articleViewModel == null)
             {
                 return NotFound("Article not found!");
             }
-            return Ok(articlesViewModel);
+            return Ok(articleViewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult<ArticleViewModel>> Post([FromBody] ArticleInputModel articlesInputModel)
+        public async Task<ActionResult<ArticleViewModel>> Post([FromBody] ArticleInputModel articleInputModel)
         {
-            var articles = await _articleService.Inserir(articlesInputModel);
-            return base.Ok((object)articles);
+            var article = await _articleService.Inserir(articleInputModel);
+            return base.Ok((object)article);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put ([FromRoute] int id, [FromBody] ArticleInputModel articlesInputModel)
+        public async Task<ActionResult> Put ([FromRoute] int id, [FromBody] ArticleInputModel articleInputModel)
         {
             try
             {
-                await _articleService.Atualizar(id, articlesInputModel);
+                await _articleService.Atualizar(id, articleInputModel);
                 return Ok();
             }
             catch (Exception)
