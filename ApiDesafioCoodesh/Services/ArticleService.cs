@@ -19,27 +19,27 @@ namespace ApiDesafioCoodesh.Services
         }
         public async Task Atualizar(int id, ArticleInputModel articlesInputModel)
         {
-            var articles = await _articlesRepository.Obter(id);
-            if (articles == null)
+            var article = await _articlesRepository.Obter(id);
+            if (article == null)
             {
                 throw new Exception("Articles not found!");
             }
             else
             {
-                articles.Title = articlesInputModel.Title;
-                articles.Url = articlesInputModel.Url;
-                articles.ImageUrl = articlesInputModel?.ImageUrl;
-                articles.NewsSite = articlesInputModel.NewsSite;
-                articles.Summary = articlesInputModel.Summary;
-                articles.PublishedAt = articlesInputModel.PublishedAt;
-                articles.Featured = articlesInputModel.Featured;                
-                await _articlesRepository.Atualizar(articles);
+                article.Title = articlesInputModel.Title;
+                article.Url = articlesInputModel.Url;
+                article.ImageUrl = articlesInputModel?.ImageUrl;
+                article.NewsSite = articlesInputModel.NewsSite;
+                article.Summary = articlesInputModel.Summary;
+                article.PublishedAt = articlesInputModel.PublishedAt;
+                article.Featured = articlesInputModel.Featured;                
+                await _articlesRepository.Atualizar(article);
             }
         }
 
         public async Task<ArticleViewModel> Inserir(ArticleInputModel articlesInputModel)
         {
-            var articlesInsert = new Article
+            var articleInsert = new Article
             {
                 Title = articlesInputModel.Title,
                 Url = articlesInputModel.Url,
@@ -49,18 +49,18 @@ namespace ApiDesafioCoodesh.Services
                 PublishedAt = articlesInputModel.PublishedAt,               
             };
             
-            await _articlesRepository.Inserir(articlesInsert);
+            await _articlesRepository.Inserir(articleInsert);
             
             return new ArticleViewModel
             {
-                Id = articlesInsert.Id,
-                Title = articlesInsert.Title,
-                Url = articlesInsert?.Url,
-                ImageUrl = articlesInsert?.ImageUrl,
-                NewsSite = articlesInsert.NewsSite,
-                Summary = articlesInsert.Summary,
-                PublishedAt= articlesInsert.PublishedAt,                
-                Featured = articlesInsert.Featured
+                Id = articleInsert.Id,
+                Title = articleInsert.Title,
+                Url = articleInsert?.Url,
+                ImageUrl = articleInsert?.ImageUrl,
+                NewsSite = articleInsert.NewsSite,
+                Summary = articleInsert.Summary,
+                PublishedAt= articleInsert.PublishedAt,                
+                Featured = articleInsert.Featured
                 
             };
         }       
@@ -86,23 +86,23 @@ namespace ApiDesafioCoodesh.Services
 
         public async Task<ArticleViewModel> Obter(int id)
         {
-            var articles = await _articlesRepository.Obter(id);
-            if(articles == null)
+            var article = await _articlesRepository.Obter(id);
+            if(article == null)
             {
                 return null;
             }
             return new ArticleViewModel
             {
-                Id = articles.Id,
-                Title = articles.Title,
-                Url = articles.Url,
-                ImageUrl = articles.ImageUrl,
-                NewsSite = articles.NewsSite,
-                Summary = articles.Summary,
-                PublishedAt = articles.PublishedAt,                
-                Featured = articles.Featured,
-                Launches = articles.Launches,
-                Events = articles.Events
+                Id = article.Id,
+                Title = article.Title,
+                Url = article.Url,
+                ImageUrl = article.ImageUrl,
+                NewsSite = article.NewsSite,
+                Summary = article.Summary,
+                PublishedAt = article.PublishedAt,                
+                Featured = article.Featured,
+                Launches = article.Launches,
+                Events = article.Events
             };
         }       
 
